@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressly – Free Image Compressor Online</title>
+    <meta name="description" content="Compress, resize &amp; convert images instantly in your browser. No uploads, no servers. Reduce image size without losing quality. 100% private.">
+    <meta name="keywords" content="image compressor online, reduce image size without losing quality, free image optimizer, compress image without uploading, compressly">
+    <meta name="robots" content="index, follow">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Compressly","applicationCategory":"MultimediaApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Professional-grade image compression that runs entirely in your browser. Zero server contact. Zero quality loss. Zero cost."}</script>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <style> @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg-1: #0B0D17;
+            --bg-2: #12162B;
+            --bg-3: #0E1428;
+            --glass: rgba(255, 255, 255, .06);
+            --glass-border: rgba(255, 255, 255, .10);
+            --glass-hover: rgba(255, 255, 255, .10);
+            --accent: #6C5CE7;
+            --accent-glow: rgba(108, 92, 231, .25);
+            --accent-light: #a78bfa;
+            --accent-dark: #5A4BD1;
+            --green: #00D2A0;
+            --green-glow: rgba(0, 210, 160, .25);
+            --danger: #FF6B6B;
+            --text: #F0F1F5;
+            --text-dim: rgba(255, 255, 255, .55);
+            --text-muted: rgba(255, 255, 255, .35);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --transition: .3s cubic-bezier(.4, 0, .2, 1);
+            --font: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-1);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(108, 92, 231, .12), transparent), radial-gradient(ellipse 50% 60% at 85% 50%, rgba(0, 210, 160, .06), transparent);
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 13, 23, .8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100%
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--accent-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.02em
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none
+        }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color var(--transition)
+        }
+
+        .nav-links a:hover {
+            color: var(--text)
+        }
+
+        @media(max-width:640px) {
+            .nav-links {
+                display: none
+            }
+        }
+
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 100px 24px 80px;
+            max-width: 800px;
+            margin: 0 auto
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .hero p {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto 36px
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            font-family: var(--font)
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: #fff;
+            box-shadow: 0 4px 24px var(--accent-glow)
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 32px var(--accent-glow)
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, var(--green), #10b981);
+            color: #000;
+            box-shadow: 0 4px 24px var(--green-glow)
+        }
+
+        .btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--green-glow)
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dim);
+            border: 1px solid var(--glass-border)
+        }
+
+        .btn-outline:hover {
+            background: var(--glass);
+            color: var(--text)
+        }
+
+        .btn-sm {
+            padding: 10px 20px;
+            font-size: 13px
+        }
+
+        .section {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(24px, 3.5vw, 36px);
+            font-weight: 700;
+            margin-bottom: 12px
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-dim);
+            max-width: 560px;
+            margin: 0 auto 48px;
+            font-size: 16px
+        }
+
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            transition: all var(--transition)
+        }
+
+        .glass:hover {
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, .15)
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px
+        }
+
+        .card {
+            padding: 32px;
+            text-align: center
+        }
+
+        .card .card-icon {
+            font-size: 40px;
+            margin-bottom: 16px
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.6
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px
+        }
+
+        @media(min-width:640px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(min-width:960px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        .feat-card {
+            position: relative;
+            padding: 32px 28px;
+            border-radius: var(--radius);
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px);
+            transition: all .4s cubic-bezier(.4, 0, .2, 1);
+            overflow: hidden
+        }
+
+        .feat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: linear-gradient(135deg, transparent 40%, rgba(108, 92, 231, .3), rgba(0, 210, 160, .2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity .4s ease
+        }
+
+        .feat-card:hover::before {
+            opacity: 1
+        }
+
+        .feat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(108, 92, 231, .12)
+        }
+
+        .feat-card.featured {
+            grid-column: 1/-1;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 40px 36px;
+            background: linear-gradient(135deg, rgba(108, 92, 231, .08), rgba(0, 210, 160, .04))
+        }
+
+        @media(max-width:639px) {
+            .feat-card.featured {
+                flex-direction: column;
+                text-align: center
+            }
+        }
+
+        .feat-card .feat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(108, 92, 231, .15), rgba(108, 92, 231, .05));
+            border: 1px solid rgba(108, 92, 231, .2);
+            margin-bottom: 16px
+        }
+
+        .feat-card.featured .feat-icon {
+            width: 72px;
+            height: 72px;
+            font-size: 36px;
+            border-radius: 18px;
+            margin-bottom: 0
+        }
+
+        .feat-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text)
+        }
+
+        .feat-card p {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.65;
+            margin: 0
+        }
+
+        .tool-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px 80px
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: var(--radius);
+            padding: 60px 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition);
+            background: var(--glass)
+        }
+
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: var(--accent);
+            background: rgba(108, 92, 231, .08);
+            transform: translateY(-2px)
+        }
+
+        .drop-zone .dz-icon {
+            font-size: 56px;
+            margin-bottom: 16px;
+            opacity: .6
+        }
+
+        .drop-zone .dz-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px
+        }
+
+        .drop-zone .dz-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 20px
+        }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 24px
+        }
+
+        .img-card {
+            position: relative;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all var(--transition)
+        }
+
+        .img-card:hover {
+            border-color: var(--accent)
+        }
+
+        .img-card.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow)
+        }
+
+        .img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .img-card .ic-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .8));
+            font-size: 11px;
+            color: var(--text-dim)
+        }
+
+        .img-card .ic-remove {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--transition)
+        }
+
+        .img-card:hover .ic-remove {
+            opacity: 1
+        }
+
+        .global-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            margin-top: 20px;
+            border-radius: var(--radius-sm);
+            background: var(--glass);
+            border: 1px solid var(--glass-border)
+        }
+
+        .global-bar label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-dim);
+            cursor: pointer
+        }
+
+        .editor {
+            display: none;
+            margin-top: 24px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--glass);
+            border: 1px solid var(--glass-border)
+        }
+
+        .editor.open {
+            display: grid;
+            grid-template-columns: 1fr 1fr
+        }
+
+        @media(max-width:768px) {
+            .editor.open {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .editor-controls {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            overflow-y: auto;
+            max-height: 600px
+        }
+
+        .editor-preview {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, .2);
+            min-height: 400px
+        }
+
+        .ctrl-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            margin-bottom: 6px
+        }
+
+        .ctrl-group select,
+        .ctrl-group input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, .06);
+            color: var(--text);
+            font-size: 14px;
+            font-family: var(--font);
+            outline: none;
+            transition: all var(--transition)
+        }
+
+        .ctrl-group select option {
+            background: #1a1a2e;
+            color: #F0F1F5;
+            padding: 10px 12px;
+            font-size: 14px
+        }
+
+        .ctrl-group select:focus,
+        .ctrl-group input[type="number"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow)
+        }
+
+        .ctrl-row {
+            display: flex;
+            gap: 10px
+        }
+
+        .ctrl-row>* {
+            flex: 1
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, .12);
+            outline: none;
+            transition: background var(--transition)
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-glow)
+        }
+
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0
+        }
+
+        .toggle .slider {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition)
+        }
+
+        .toggle .slider::before {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition)
+        }
+
+        .toggle input:checked+.slider {
+            background: var(--accent)
+        }
+
+        .toggle input:checked+.slider::before {
+            transform: translateX(20px)
+        }
+
+        .fit-tabs {
+            display: flex;
+            gap: 4px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: var(--radius-xs);
+            padding: 3px
+        }
+
+        .fit-tab {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: var(--radius-xs);
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: var(--font)
+        }
+
+        .fit-tab.active {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .crop-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-sm);
+            background: repeating-conic-gradient(rgba(255, 255, 255, .05) 0% 25%, transparent 0% 50%) 0 0/20px 20px;
+            border: 1px solid var(--glass-border);
+            margin-top: 12px;
+            cursor: grab;
+            touch-action: none;
+            max-width: 100%
+        }
+
+        .crop-container:active {
+            cursor: grabbing
+        }
+
+        .crop-container canvas {
+            display: block
+        }
+
+        .stats {
+            background: rgba(0, 0, 0, .3);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 16px;
+            width: 100%;
+            font-family: var(--font-mono)
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            color: var(--text-dim)
+        }
+
+        .stat-row strong {
+            color: var(--text)
+        }
+
+        .stat-row.saved strong {
+            color: var(--green)
+        }
+
+        .privacy-banner {
+            text-align: center;
+            padding: 60px 24px;
+            background: linear-gradient(135deg, rgba(108, 92, 231, .10), rgba(0, 210, 160, .06));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            margin: 0 24px
+        }
+
+        .privacy-banner h2 {
+            margin-bottom: 12px
+        }
+
+        .privacy-banner p {
+            color: var(--text-dim);
+            max-width: 540px;
+            margin: 0 auto 28px;
+            font-size: 15px;
+            line-height: 1.7
+        }
+
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 80px;
+            font-size: 13px;
+            color: var(--text-muted)
+        }
+
+        .footer .f-copy {
+            margin-top: 0
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s ease, transform .6s ease
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap
+        }
+
+        .mt-2 {
+            margin-top: 16px
+        }
+
+        .mt-1 {
+            margin-top: 8px
+        }
+
+        /* ===== MOBILE RESPONSIVE ===== */
+
+        /* Tablet & small desktop */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 16px;
+                height: 56px
+            }
+
+            .nav-logo {
+                font-size: 18px
+            }
+
+            .hero {
+                padding: 60px 20px 50px
+            }
+
+            .hero p {
+                font-size: 15px;
+                margin-bottom: 28px
+            }
+
+            .section {
+                padding: 50px 16px
+            }
+
+            .section-sub {
+                margin-bottom: 32px;
+                font-size: 15px
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 16px
+            }
+
+            .card {
+                padding: 24px
+            }
+
+            .features-grid {
+                gap: 14px
+            }
+
+            .feat-card {
+                padding: 24px 20px
+            }
+
+            .feat-card.featured {
+                padding: 28px 24px;
+                gap: 20px
+            }
+
+            .tool-wrap {
+                padding: 0 16px 50px
+            }
+
+            .drop-zone {
+                padding: 40px 16px
+            }
+
+            .drop-zone .dz-icon {
+                font-size: 40px;
+                margin-bottom: 12px
+            }
+
+            .drop-zone .dz-title {
+                font-size: 16px
+            }
+
+            .drop-zone .dz-sub {
+                font-size: 13px
+            }
+
+            .img-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px
+            }
+
+            .global-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+                padding: 14px 16px
+            }
+
+            .global-bar > div {
+                justify-content: center
+            }
+
+            .editor-controls {
+                padding: 20px;
+                max-height: none
+            }
+
+            .editor-preview {
+                padding: 16px;
+                min-height: 280px
+            }
+
+            .stats {
+                padding: 12px
+            }
+
+            .stat-row {
+                font-size: 12px
+            }
+
+            .privacy-banner {
+                padding: 40px 16px;
+                margin: 0 16px
+            }
+
+            .footer {
+                padding: 30px 16px;
+                margin-top: 50px
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 14px
+            }
+
+            .btn-sm {
+                padding: 8px 16px;
+                font-size: 12px
+            }
+        }
+
+        /* Mobile phones */
+        @media (max-width: 480px) {
+            .nav {
+                padding: 0 12px;
+                height: 52px
+            }
+
+            .nav-logo {
+                font-size: 16px
+            }
+
+            .hero {
+                padding: 40px 16px 36px
+            }
+
+            .hero h1 {
+                font-size: 26px;
+                margin-bottom: 14px
+            }
+
+            .hero p {
+                font-size: 14px;
+                margin-bottom: 24px;
+                line-height: 1.5
+            }
+
+            .hero > div {
+                flex-direction: column;
+                gap: 10px !important
+            }
+
+            .hero .btn {
+                width: 100%
+            }
+
+            .section {
+                padding: 36px 14px
+            }
+
+            .section-title {
+                font-size: 22px;
+                margin-bottom: 8px
+            }
+
+            .section-sub {
+                font-size: 14px;
+                margin-bottom: 24px
+            }
+
+            .grid-3 {
+                gap: 12px
+            }
+
+            .card {
+                padding: 20px 16px
+            }
+
+            .card .card-icon {
+                font-size: 32px;
+                margin-bottom: 12px
+            }
+
+            .card h3 {
+                font-size: 16px
+            }
+
+            .card p {
+                font-size: 13px
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+
+            .feat-card {
+                padding: 20px 16px
+            }
+
+            .feat-card.featured {
+                padding: 24px 18px;
+                gap: 16px
+            }
+
+            .feat-card .feat-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                border-radius: 12px;
+                margin-bottom: 12px
+            }
+
+            .feat-card.featured .feat-icon {
+                width: 56px;
+                height: 56px;
+                font-size: 28px
+            }
+
+            .feat-card h3 {
+                font-size: 15px
+            }
+
+            .feat-card p {
+                font-size: 13px
+            }
+
+            .tool-wrap {
+                padding: 0 12px 40px
+            }
+
+            .drop-zone {
+                padding: 32px 12px;
+                border-radius: var(--radius-sm)
+            }
+
+            .drop-zone .dz-icon {
+                font-size: 36px;
+                margin-bottom: 10px
+            }
+
+            .drop-zone .dz-title {
+                font-size: 15px
+            }
+
+            .drop-zone .dz-sub {
+                font-size: 12px;
+                margin-bottom: 16px
+            }
+
+            .img-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-top: 16px
+            }
+
+            .img-card .ic-remove {
+                opacity: 1
+            }
+
+            .global-bar {
+                padding: 12px;
+                gap: 10px;
+                font-size: 13px
+            }
+
+            .global-bar label {
+                font-size: 13px
+            }
+
+            .editor.open {
+                border-radius: var(--radius-sm)
+            }
+
+            .editor-controls {
+                padding: 16px;
+                gap: 14px
+            }
+
+            .editor-preview {
+                padding: 12px;
+                min-height: 220px
+            }
+
+            .ctrl-group select,
+            .ctrl-group input[type="number"] {
+                padding: 8px 10px;
+                font-size: 13px
+            }
+
+            .crop-container {
+                margin-top: 8px
+            }
+
+            .stats {
+                padding: 10px;
+                margin-top: 12px
+            }
+
+            .stat-row {
+                font-size: 11px;
+                padding: 4px 0
+            }
+
+            .privacy-banner {
+                padding: 30px 14px;
+                margin: 0 12px
+            }
+
+            .privacy-banner h2 {
+                font-size: 20px
+            }
+
+            .privacy-banner p {
+                font-size: 13px
+            }
+
+            .footer {
+                padding: 24px 14px;
+                margin-top: 40px;
+                font-size: 12px
+            }
+
+            .btn {
+                padding: 11px 20px;
+                font-size: 13px
+            }
+
+            .btn-sm {
+                padding: 8px 14px;
+                font-size: 12px
+            }
+
+            .fit-tabs {
+                padding: 2px
+            }
+
+            .fit-tab {
+                padding: 6px;
+                font-size: 11px
+            }
+
+            .toggle {
+                width: 38px;
+                height: 22px
+            }
+
+            .toggle .slider::before {
+                width: 16px;
+                height: 16px
+            }
+
+            .toggle input:checked+.slider::before {
+                transform: translateX(16px)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#" class="nav-logo">⚡ Compressly</a>
+        <ul class="nav-links">
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#compressor-tool">Tool</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Compress images instantly. Nothing leaves your device.</h1>
+        <p>Professional-grade compression, resizing, and format conversion — powered entirely by your browser. No uploads. No servers. No compromises.</p>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+            <a href="#compressor-tool" class="btn btn-primary">Start Compressing</a>
+            <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+        </div>
+    </header>
+
+    <section id="how-it-works" class="section">
+        <h2 class="section-title reveal">How It Works</h2>
+        <p class="section-sub reveal">Three steps. No sign-up. No waiting.</p>
+        <div class="grid-3">
+            <div class="glass card reveal">
+                <div class="card-icon">📤</div>
+                <h3>Drop Your Images</h3>
+                <p>Drag &amp; drop or browse. Upload one or dozens — Compressly handles them all.</p>
+            </div>
+            <div class="glass card reveal">
+                <div class="card-icon">⚙️</div>
+                <h3>Adjust Settings</h3>
+                <p>Quality, dimensions, format, crop mode. Preview updates in real-time as you change settings.</p>
+            </div>
+            <div class="glass card reveal">
+                <div class="card-icon">⬇️</div>
+                <h3>Download Instantly</h3>
+                <p>Grab each image individually or download everything as a single ZIP.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2 class="section-title reveal">Why Compressly?</h2>
+        <p class="section-sub reveal">Built for people who care about their images.</p>
+        <div class="features-grid">
+            <div class="feat-card featured glass reveal">
+                <div class="feat-icon">🔒</div>
+                <div>
+                    <h3>Total Privacy</h3>
+                    <p>Your images are processed locally using your browser's native APIs. Nothing is uploaded. Nothing is stored. Nothing is tracked. Ever.</p>
+                </div>
+            </div>
+            <div class="feat-card glass reveal">
+                <div class="feat-icon">⚡</div>
+                <h3>Instant Processing</h3>
+                <p>Compression happens in real-time as you adjust settings. No waiting, no loading screens, no server round-trips.</p>
+            </div>
+            <div class="feat-card glass reveal">
+                <div class="feat-icon">🎯</div>
+                <h3>Precision Control</h3>
+                <p>Adjust quality, dimensions, format, and crop mode independently for each image. Live statistics update as you work.</p>
+            </div>
+            <div class="feat-card glass reveal">
+                <div class="feat-icon">📦</div>
+                <h3>Bulk Processing</h3>
+                <p>Upload and compress dozens of images at once. Apply unified settings or customize each one. Download all as a ZIP.</p>
+            </div>
+            <div class="feat-card glass reveal">
+                <div class="feat-icon">✂️</div>
+                <h3>Crop &amp; Resize</h3>
+                <p>Fit or manually crop with a draggable, zoomable preview frame — like positioning a profile picture.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="compressor-tool" class="tool-wrap">
+        <h2 class="section-title reveal" style="margin-bottom:32px;">Compressly Tool</h2>
+
+        <div class="drop-zone" id="dropZone">
+            <div class="dz-icon">📁</div>
+            <div class="dz-title">Drag &amp; Drop Images Here</div>
+            <div class="dz-sub">or click to browse • Supports JPEG, PNG, WebP, GIF, BMP</div>
+            <button class="btn btn-primary btn-sm" type="button" id="browseBtn">Browse Files</button>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        </div>
+
+        <div id="imgGrid" class="img-grid"></div>
+
+        <div id="globalBar" class="global-bar" style="display:none;">
+            <label><span>Apply settings to all images</span>
+                <label class="toggle"><input type="checkbox" id="applyAllToggle"><span class="slider"></span></label>
+            </label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-green btn-sm" id="downloadAllBtn">⬇️ Download All (ZIP)</button>
+                <button class="btn btn-outline btn-sm" id="clearAllBtn">✕ Clear All</button>
+            </div>
+        </div>
+
+        <div id="editor" class="editor">
+            <div class="editor-controls" id="editorControls">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <h3 style="font-size:16px;font-weight:600;">Edit Image</h3>
+                    <button class="btn btn-outline btn-sm" id="closeEditorBtn">✕ Close</button>
+                </div>
+                <div class="ctrl-group">
+                    <label for="formatSel">Output Format</label>
+                    <select id="formatSel">
+                        <option value="image/jpeg">JPEG – Best for photos</option>
+                        <option value="image/png">PNG – Lossless, transparency</option>
+                        <option value="image/webp">WebP – Smallest size</option>
+                    </select>
+                </div>
+                <div class="ctrl-group">
+                    <label>Quality: <strong id="qualityLabel">0.8</strong></label>
+                    <input type="range" id="qualitySlider" min="0.1" max="1" step="0.05" value="0.8">
+                    <div
+                        style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px">
+                        <span>Smaller file</span><span>Better quality</span></div>
+                </div>
+                <div class="ctrl-group">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                        <label style="margin:0">Dimensions (px)</label>
+                        <label
+                            style="margin:0;font-size:12px;display:flex;align-items:center;gap:6px;cursor:pointer"><span id="lockLabel">🔒 Locked</span>
+                            <label class="toggle"><input type="checkbox" id="ratioLock" checked><span class="slider"></span></label>
+                        </label>
+                    </div>
+                    <div class="ctrl-row">
+                        <div><input type="number" id="widthIn" placeholder="Width" min="1">
+                            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Width</div>
+                        </div>
+                        <div><input type="number" id="heightIn" placeholder="Height" min="1">
+                            <div style="font-size:11px;color:var(--text-muted);margin-top:3px">Height</div>
+                        </div>
+                    </div>
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:6px">⚠ Cannot exceed original dimensions.</div>
+                </div>
+                <div class="ctrl-group">
+                    <label style="margin-bottom:8px">Preview Mode</label>
+                    <div class="fit-tabs" id="fitTabs">
+                        <button class="fit-tab active" data-mode="fit">Fit</button>
+                        <button class="fit-tab" data-mode="crop">Crop</button>
+                    </div>
+                </div>
+                <div class="ctrl-group" id="zoomGroup" style="display:none">
+                    <label>Zoom: <strong id="zoomLabel">100%</strong></label>
+                    <input type="range" id="zoomSlider" min="100" max="400" step="5" value="100">
+                </div>
+                <button class="btn btn-green btn-sm mt-2" id="downloadOneBtn">⬇️ Download This Image</button>
+            </div>
+            <div class="editor-preview" id="editorPreview">
+                <div class="crop-container" id="cropContainer"><canvas id="cropCanvas"></canvas></div>
+                <div class="stats" id="statsPanel">
+                    <div class="stat-row"><span>Original</span><strong id="statOrig">–</strong></div>
+                    <div class="stat-row"><span>Compressed</span><strong id="statComp">–</strong></div>
+                    <div class="stat-row saved"><span>Saved</span><strong id="statSaved">–</strong></div>
+                    <div class="stat-row"><span>Format</span><strong id="statFmt">–</strong></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="f-copy">© 2026 Compressly. All processing happens locally. Your images never leave your device.
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--text-muted)">Compress locally. Trust completely.</div>
+    </footer>
+
+    <script defer>
+        (function () {
+            'use strict';
+
+            function fmtSize(b) { if (b < 1024) return b + ' B'; if (b < 1048576) return (b / 1024).toFixed(1) + ' KB'; return (b / 1048576).toFixed(2) + ' MB'; }
+            function debounce(fn, ms) { let t; return function (...a) { clearTimeout(t); t = setTimeout(() => fn.apply(this, a), ms); }; }
+            function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+            const images = [];
+            let activeId = null, nextId = 0;
+
+            const $ = s => document.querySelector(s);
+            const dropZone = $('#dropZone'), fileInput = $('#fileInput'), browseBtn = $('#browseBtn');
+            const imgGrid = $('#imgGrid'), globalBar = $('#globalBar'), applyAll = $('#applyAllToggle');
+            const editor = $('#editor'), editorControls = $('#editorControls'), editorPreview = $('#editorPreview');
+            const formatSel = $('#formatSel'), qualitySlider = $('#qualitySlider'), qualityLabel = $('#qualityLabel');
+            const widthIn = $('#widthIn'), heightIn = $('#heightIn'), ratioLock = $('#ratioLock'), lockLabel = $('#lockLabel');
+            const fitTabs = $('#fitTabs'), zoomGroup = $('#zoomGroup'), zoomSlider = $('#zoomSlider'), zoomLabel = $('#zoomLabel');
+            const cropContainer = $('#cropContainer'), cropCanvas = $('#cropCanvas'), cropCtx = cropCanvas.getContext('2d');
+            const statOrig = $('#statOrig'), statComp = $('#statComp'), statSaved = $('#statSaved'), statFmt = $('#statFmt');
+
+            browseBtn.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('click', e => { if (e.target === browseBtn || browseBtn.contains(e.target)) return; fileInput.click(); });
+            dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+            dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleFiles(e.dataTransfer.files); });
+            fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+            function handleFiles(files) {
+                if (!files || !files.length) return;
+                Array.from(files).forEach(f => {
+                    if (!f.type.startsWith('image/')) return;
+                    const img = new Image();
+                    const url = URL.createObjectURL(f);
+                    img.onload = () => {
+                        const entry = {
+                            id: nextId++, file: f, img, origW: img.naturalWidth, origH: img.naturalHeight, origSize: f.size,
+                            w: img.naturalWidth, h: img.naturalHeight, quality: .8, format: 'image/jpeg', fitMode: 'fit',
+                            zoom: 100, panX: 0, panY: 0, blob: null, blobUrl: null
+                        };
+                        images.push(entry);
+                        renderGrid();
+                        if (images.length === 1) openEditor(entry.id);
+                        globalBar.style.display = 'flex';
+                    };
+                    img.src = url;
+                });
+                fileInput.value = '';
+            }
+
+            function renderGrid() {
+                imgGrid.innerHTML = '';
+                images.forEach(e => {
+                    const div = document.createElement('div');
+                    div.className = 'img-card glass' + (e.id === activeId ? ' active' : '');
+                    div.innerHTML = `<img src="${e.img.src}" alt="uploaded image"><div class="ic-info">${e.origW}×${e.origH} · ${fmtSize(e.origSize)}</div><button class="ic-remove" title="Remove">✕</button>`;
+                    div.querySelector('.ic-remove').addEventListener('click', ev => { ev.stopPropagation(); removeImage(e.id); });
+                    div.addEventListener('click', () => openEditor(e.id));
+                    imgGrid.appendChild(div);
+                });
+                if (!images.length) { globalBar.style.display = 'none'; editor.classList.remove('open'); }
+            }
+
+            function removeImage(id) {
+                const idx = images.findIndex(e => e.id === id);
+                if (idx === -1) return;
+                const e = images[idx];
+                if (e.blobUrl) URL.revokeObjectURL(e.blobUrl);
+                URL.revokeObjectURL(e.img.src);
+                images.splice(idx, 1);
+                if (activeId === id) { activeId = null; editor.classList.remove('open'); }
+                renderGrid();
+            }
+
+            function getActive() { return images.find(e => e.id === activeId); }
+
+            function openEditor(id) {
+                activeId = id;
+                const e = getActive(); if (!e) return;
+                editor.classList.add('open');
+                formatSel.value = e.format;
+                qualitySlider.value = e.quality; qualityLabel.textContent = e.quality;
+                widthIn.value = e.w; heightIn.value = e.h;
+                ratioLock.checked = true; lockLabel.textContent = '🔒 Locked';
+                setFitMode(e.fitMode);
+                zoomSlider.value = e.zoom; zoomLabel.textContent = e.zoom + '%';
+                renderGrid();
+                renderPreview();
+            }
+
+            $('#closeEditorBtn').addEventListener('click', () => { activeId = null; editor.classList.remove('open'); renderGrid(); });
+
+            const liveUpdate = debounce(() => { const e = getActive(); if (e) renderPreview(); }, 300);
+
+            formatSel.addEventListener('change', () => { const e = getActive(); if (e) { e.format = formatSel.value; propagate('format'); liveUpdate(); } });
+            qualitySlider.addEventListener('input', () => { qualityLabel.textContent = parseFloat(qualitySlider.value).toFixed(2); const e = getActive(); if (e) { e.quality = parseFloat(qualitySlider.value); propagate('quality'); liveUpdate(); } });
+
+            widthIn.addEventListener('input', () => {
+                const e = getActive(); if (!e) return;
+                let v = parseInt(widthIn.value) || 1;
+                v = clamp(v, 1, e.origW); widthIn.value = v; e.w = v;
+                if (ratioLock.checked) { e.h = Math.round(v * (e.origH / e.origW)); e.h = clamp(e.h, 1, e.origH); heightIn.value = e.h; }
+                propagate('dims'); liveUpdate();
+            });
+            heightIn.addEventListener('input', () => {
+                const e = getActive(); if (!e) return;
+                let v = parseInt(heightIn.value) || 1;
+                v = clamp(v, 1, e.origH); heightIn.value = v; e.h = v;
+                if (ratioLock.checked) { e.w = Math.round(v * (e.origW / e.origH)); e.w = clamp(e.w, 1, e.origW); widthIn.value = e.w; }
+                propagate('dims'); liveUpdate();
+            });
+
+            ratioLock.addEventListener('change', () => {
+                lockLabel.textContent = ratioLock.checked ? '🔒 Locked' : '🔓 Unlocked';
+                if (ratioLock.checked) { const e = getActive(); if (e) { e.h = Math.round(e.w * (e.origH / e.origW)); e.h = clamp(e.h, 1, e.origH); heightIn.value = e.h; liveUpdate(); } }
+            });
+
+            fitTabs.addEventListener('click', ev => {
+                const tab = ev.target.closest('.fit-tab'); if (!tab) return;
+                setFitMode(tab.dataset.mode);
+                const e = getActive(); if (e) { e.fitMode = tab.dataset.mode; e.panX = 0; e.panY = 0; e.zoom = 100; zoomSlider.value = 100; zoomLabel.textContent = '100%'; propagate('fitMode'); liveUpdate(); }
+            });
+            function setFitMode(mode) {
+                fitTabs.querySelectorAll('.fit-tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+                zoomGroup.style.display = mode === 'crop' ? 'block' : 'none';
+            }
+
+            zoomSlider.addEventListener('input', () => {
+                const e = getActive(); if (!e) return;
+                e.zoom = parseInt(zoomSlider.value); zoomLabel.textContent = e.zoom + '%'; liveUpdate();
+            });
+
+            function propagate(prop) {
+                if (!applyAll.checked) return;
+                const e = getActive(); if (!e) return;
+                images.forEach(o => {
+                    if (o.id === e.id) return;
+                    if (prop === 'format') o.format = e.format;
+                    if (prop === 'quality') o.quality = e.quality;
+                    if (prop === 'fitMode') { o.fitMode = e.fitMode; o.panX = 0; o.panY = 0; o.zoom = 100; }
+                    if (prop === 'dims') {
+                        o.w = clamp(e.w, 1, o.origW); o.h = clamp(e.h, 1, o.origH);
+                    }
+                });
+            }
+
+            let dragging = false, dragStartX = 0, dragStartY = 0, panStartX = 0, panStartY = 0;
+
+            cropContainer.addEventListener('pointerdown', ev => {
+                const e = getActive(); if (!e || e.fitMode !== 'crop') return;
+                dragging = true; dragStartX = ev.clientX; dragStartY = ev.clientY; panStartX = e.panX; panStartY = e.panY;
+                cropContainer.setPointerCapture(ev.pointerId);
+            });
+            cropContainer.addEventListener('pointermove', ev => {
+                if (!dragging) return;
+                const e = getActive(); if (!e) return;
+                e.panX = panStartX + (ev.clientX - dragStartX); e.panY = panStartY + (ev.clientY - dragStartY);
+                requestAnimationFrame(() => drawCrop(e));
+            });
+            cropContainer.addEventListener('pointerup', () => { dragging = false; });
+            cropContainer.addEventListener('wheel', ev => {
+                const e = getActive(); if (!e || e.fitMode !== 'crop') return;
+                ev.preventDefault();
+                const delta = ev.deltaY > 0 ? -10 : 10;
+                e.zoom = clamp(e.zoom + delta, 100, 400);
+                zoomSlider.value = e.zoom; zoomLabel.textContent = e.zoom + '%';
+                requestAnimationFrame(() => drawCrop(e));
+            }, { passive: false });
+
+            function renderPreview() {
+                const e = getActive(); if (!e) return;
+                drawCrop(e);
+                const offCanvas = document.createElement('canvas');
+                const offCtx = offCanvas.getContext('2d');
+                offCanvas.width = e.w; offCanvas.height = e.h;
+
+                drawToCanvas(offCtx, e, e.w, e.h);
+                const q = e.format === 'image/png' ? undefined : e.quality;
+                offCanvas.toBlob(blob => {
+                    if (!blob) return;
+                    if (e.blobUrl) URL.revokeObjectURL(e.blobUrl);
+                    e.blob = blob; e.blobUrl = URL.createObjectURL(blob);
+                    statOrig.textContent = fmtSize(e.origSize);
+                    statComp.textContent = fmtSize(blob.size);
+                    const pct = ((1 - blob.size / e.origSize) * 100).toFixed(1);
+                    statSaved.textContent = (pct > 0 ? pct + '% ↓' : 'Size increased');
+                    const fmtMap = { 'image/jpeg': 'JPEG', 'image/png': 'PNG', 'image/webp': 'WebP' };
+                    statFmt.textContent = (fmtMap[e.format] || 'JPEG') + ' · ' + e.w + '×' + e.h + 'px';
+                }, e.format, e.quality);
+            }
+
+            function drawToCanvas(ctx, e, cw, ch) {
+                const iw = e.origW, ih = e.origH;
+                if (e.fitMode === 'fit') {
+                    const scale = Math.min(cw / iw, ch / ih);
+                    const dw = iw * scale, dh = ih * scale;
+                    ctx.clearRect(0, 0, cw, ch);
+                    ctx.drawImage(e.img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+                } else {
+                    const scale = (e.zoom / 100) * Math.max(cw / iw, ch / ih);
+                    const dw = iw * scale, dh = ih * scale;
+                    ctx.clearRect(0, 0, cw, ch);
+                    ctx.drawImage(e.img, (cw - dw) / 2 + e.panX, (ch - dh) / 2 + e.panY, dw, dh);
+                }
+            }
+
+            function drawCrop(e) {
+                const maxW = cropContainer.parentElement.clientWidth - 56;
+                const maxH = 400;
+                const dispScale = Math.min(1, maxW / e.w, maxH / e.h);
+                const cw = Math.round(e.w * dispScale), ch = Math.round(e.h * dispScale);
+                cropCanvas.width = cw; cropCanvas.height = ch;
+                cropContainer.style.width = cw + 'px'; cropContainer.style.height = ch + 'px';
+                if (e.format === 'image/jpeg') { cropCtx.fillStyle = '#fff'; cropCtx.fillRect(0, 0, cw, ch); }
+                drawToCanvas(cropCtx, e, cw, ch);
+            }
+
+            $('#downloadOneBtn').addEventListener('click', () => {
+                const e = getActive(); if (!e) return;
+                const c = document.createElement('canvas'); c.width = e.w; c.height = e.h;
+                const ctx = c.getContext('2d');
+                if (e.format === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, e.w, e.h); }
+                drawToCanvas(ctx, e, e.w, e.h);
+                c.toBlob(blob => {
+                    if (!blob) return;
+                    const ext = e.format.split('/')[1];
+                    const name = e.file.name.replace(/\.[^.]+$/, '') + '-compressed.' + ext;
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+                }, e.format, e.quality);
+            });
+
+            $('#downloadAllBtn').addEventListener('click', async () => {
+                if (!images.length) return;
+                const btn = $('#downloadAllBtn'); btn.textContent = '⏳ Preparing...'; btn.disabled = true;
+                try {
+                    if (!window.JSZip) {
+                        await new Promise((res, rej) => { const s = document.createElement('script'); s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
+                    }
+                    const zip = new JSZip();
+                    const blobs = await Promise.all(images.map(e => new Promise(res => {
+                        const c = document.createElement('canvas'); c.width = e.w; c.height = e.h;
+                        const ctx = c.getContext('2d');
+                        if (e.format === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, e.w, e.h); }
+                        drawToCanvas(ctx, e, e.w, e.h);
+                        c.toBlob(blob => {
+                            const ext = e.format.split('/')[1];
+                            const name = e.file.name.replace(/\.[^.]+$/, '') + '-compressed.' + ext;
+                            res({ name, blob });
+                        }, e.format, e.quality);
+                    })));
+                    blobs.forEach(({ name, blob }) => zip.file(name, blob));
+                    const content = await zip.generateAsync({ type: 'blob' });
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(content); a.download = 'images-compressed.zip'; a.click();
+                    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+                } catch (err) { console.error(err); alert('Failed to create ZIP. Check your internet connection for JSZip library.'); }
+                btn.textContent = '⬇️ Download All (ZIP)'; btn.disabled = false;
+            });
+
+            $('#clearAllBtn').addEventListener('click', () => {
+                images.forEach(e => { if (e.blobUrl) URL.revokeObjectURL(e.blobUrl); URL.revokeObjectURL(e.img.src); });
+                images.length = 0; activeId = null;
+                editor.classList.remove('open'); renderGrid();
+            });
+
+            const revealObs = new IntersectionObserver((entries) => {
+                entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+        })();
+    </script>
+</body>
+
+</html>
